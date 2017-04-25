@@ -1,0 +1,156 @@
+﻿EV3SimulatorName - English
+========================
+
+.. toctree::
+   :hidden:
+
+   index_j
+
+
+Introduction
+============
+
+
+For a full list of classes and functions, see the `API documentation`_.
+
+.. _`API Documentation`:
+   doxygen/html/index.html
+
+Requirements
+============
+
+EV3Simulator uses the `CMake build system`. You will need at least version
+2.8 to be able to build the component.
+
+.. _`CMAke build system`:
+   http://www.cmake.org
+
+
+Installation
+============
+
+Binary
+------
+
+Users of Windows can install the component using the binary installer. This
+will install the component and all its necessary dependencies. It is the
+recommended method of installation in Windows.
+
+- Download the installer from the website.
+- Double-click the executable file to begin installation.
+- Follow the instructions to install the component.
+- You may need to restart your computer for environment variable changes
+  to take effect before using the component.
+
+The component can be launched by double-clicking the
+``EV3SimulatorComp`` executable. The ``EV3Simulator`` library
+is available for loading into a manager, using the initialisation function
+``EV3SimulatorInit``.
+
+From source
+-----------
+
+Follow these steps to install EV3Simulator from source in any operating
+system:
+
+- Download the source, either from the repository or a source archive,
+  and extract it somewhere::
+
+    tar -xvzf EV3Simulator-1.0.0.tar.gz
+
+- Change to the directory containing the extracted source::
+
+    cd EV3Simulator-1.0.0
+
+- Create a directory called ``build``::
+
+    mkdir build
+
+- Change to that directory::
+
+    cd build
+
+- Run cmake or cmake-gui::
+
+    cmake ../
+
+- If no errors occurred, run make::
+
+    make
+
+- Finally, install the component. Ensure the necessary permissions to
+  install into the chosen prefix are available::
+
+    make install
+
+- The install destination can be changed by executing ccmake and changing
+  the variable ``CMAKE_INSTALL_PREFIX``::
+
+    ccmake ../
+
+The component is now ready for use. See the next section for instructions on
+configuring the component.
+
+EV3Simulator can be launched in stand-alone mode by executing the
+``EV3SimulatorComp`` executable (installed into ``${prefix}/components/bin``).
+Alternatively, ``libEV3Simulator.so`` can be loaded into a manager, using the
+initialisation function ``EV3SimulatorInit``. This shared object can be found in
+``${prefix}/components/lib`` or ``${prefix}/components/lib64``.
+
+
+Configuration
+=============
+
+The available configuration parameters are described below:
+
+================ ================== ================ ======
+Parameter        Data type          Default Value    Effect
+================ ================== ================ ======
+medium_motor_speed double             1.6              モーターMの速度
+blocksConfigFile string             None             障害物の配置設定ファイルの名前
+touchSensorOnLength double             0.003            タッチセンサをオンと判定する押し込んだ距離
+lightReflectThreshold double             0.1              カラーセンサから物体までの距離がこの値以下になると255を出力
+plane_exist      int                0                1の時は新たに地面作成
+plane_x          double             0                地面の位置(X)
+plane_y          double             0                地面の位置(Y)
+plane_lx         double             1.0              地面の長さ
+plane_ly         double             1.0              地面の幅
+plane_lz         double             1.0              地面の高さ
+================ ================== ================ ======
+
+Ports
+=====
+
+The ports provided by the component are described below:
+
+=============== =========== ============================== =======
+Name            Type        Data type                      Purpose
+=============== =========== ============================== =======
+velocity2D      InPort      RTC::TimedVelocity2D           目標速度
+angle           InPort      RTC::TimedDouble               モーターMの角度
+odometry        OutPort     RTC::TimedPose2D               現在の位置・姿勢
+ultrasonic      OutPort     RTC::RangeData                 超音波センサで計測した距離
+gyro            OutPort     RTC::TimedDouble               ジャイロセンサで計測した角度
+light_reflect   OutPort     RTC::TimedDouble               カラーセンサで計測した反射光の強さ
+touch           OutPort     RTC::TimedBooleanSeq           タッチセンサのオンオフ。右側が0番目の要素、左側が1番目の要素
+=============== =========== ============================== =======
+
+Examples
+========
+
+An example configuration file is provided in the
+``${prefix}/components/share/EV3Simulator/examples/conf/`` directory.
+
+Changelog
+=========
+
+
+
+License
+=======
+
+This software is developed at the National Institute of Advanced
+Industrial Science and Technology. Approval number H23PRO-????. This
+software is licensed under the Lesser General Public License. See
+COPYING.LESSER.
+

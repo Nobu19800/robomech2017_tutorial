@@ -1,0 +1,209 @@
+// -*- C++ -*-
+/*!
+ * @file  ControlEducatorVehicle.cpp
+ * @brief Control Educator Vehicle
+ * @date $Date$
+ *
+ * @author 宮本　信彦　n-miyamoto@aist.go.jp
+ * 産業技術総合研究所　ロボットイノベーション研究センター
+ * ロボットソフトウエアプラットフォーム研究チーム
+ *
+ * LGPL
+ *
+ * $Id$
+ */
+
+#include "ControlEducatorVehicle.h"
+
+// Module specification
+// <rtc-template block="module_spec">
+static const char* controleducatorvehicle_spec[] =
+  {
+    "implementation_id", "ControlEducatorVehicle",
+    "type_name",         "ControlEducatorVehicle",
+    "description",       "Control Educator Vehicle",
+    "version",           "1.0.0",
+    "vendor",            "AIST",
+    "category",          "Controller",
+    "activity_type",     "PERIODIC",
+    "kind",              "DataFlowComponent",
+    "max_instance",      "1",
+    "language",          "C++",
+    "lang_type",         "compile",
+    // Configuration variables
+    "conf.default.sensor_height", "0.20",
+    "conf.default.back_speed", "0.1",
+    "conf.default.back_time", "0.5",
+    "conf.default.rotate_speed", "1.6",
+    "conf.default.rotate_time", "1.0",
+    "conf.default.medium_motor_range", "1.0",
+    "conf.default.medium_motor_speed", "0.6",
+
+    // Widget
+    "conf.__widget__.sensor_height", "text",
+    "conf.__widget__.back_speed", "text",
+    "conf.__widget__.back_time", "text",
+    "conf.__widget__.rotate_speed", "text",
+    "conf.__widget__.rotate_time", "text",
+    "conf.__widget__.medium_motor_range", "text",
+    "conf.__widget__.medium_motor_speed", "text",
+    // Constraints
+    "conf.__constraints__.medium_motor_range", "0<x<3.14",
+
+    "conf.__type__.sensor_height", "double",
+    "conf.__type__.back_speed", "double",
+    "conf.__type__.back_time", "double",
+    "conf.__type__.rotate_speed", "double",
+    "conf.__type__.rotate_time", "double",
+    "conf.__type__.medium_motor_range", "double",
+    "conf.__type__.medium_motor_speed", "double",
+
+    ""
+  };
+// </rtc-template>
+
+/*!
+ * @brief constructor
+ * @param manager Maneger Object
+ */
+ControlEducatorVehicle::ControlEducatorVehicle(RTC::Manager* manager)
+    // <rtc-template block="initializer">
+  : RTC::DataFlowComponentBase(manager),
+    m_target_velocity_inIn("target_velocity_in", m_target_velocity_in),
+    m_ultrasonicIn("ultrasonic", m_ultrasonic),
+    m_touchIn("touch", m_touch),
+    m_current_poseIn("current_pose", m_current_pose),
+    m_target_velocity_outOut("target_velocity_out", m_target_velocity_out),
+    m_angleOut("angle", m_angle)
+
+    // </rtc-template>
+{
+}
+
+/*!
+ * @brief destructor
+ */
+ControlEducatorVehicle::~ControlEducatorVehicle()
+{
+}
+
+
+
+RTC::ReturnCode_t ControlEducatorVehicle::onInitialize()
+{
+  // Registration: InPort/OutPort/Service
+  // <rtc-template block="registration">
+  // Set InPort buffers
+  addInPort("target_velocity_in", m_target_velocity_inIn);
+  addInPort("ultrasonic", m_ultrasonicIn);
+  addInPort("touch", m_touchIn);
+  addInPort("current_pose", m_current_poseIn);
+  
+  // Set OutPort buffer
+  addOutPort("target_velocity_out", m_target_velocity_outOut);
+  addOutPort("angle", m_angleOut);
+  
+  // Set service provider to Ports
+  
+  // Set service consumers to Ports
+  
+  // Set CORBA Service Ports
+  
+  // </rtc-template>
+
+  // <rtc-template block="bind_config">
+  // Bind variables and configuration variable
+  bindParameter("sensor_height", m_sensor_height, "0.20");
+  bindParameter("back_speed", m_back_speed, "0.1");
+  bindParameter("back_time", m_back_time, "0.5");
+  bindParameter("rotate_speed", m_rotate_speed, "1.6");
+  bindParameter("rotate_time", m_rotate_time, "1.0");
+  bindParameter("medium_motor_range", m_medium_motor_range, "1.0");
+  bindParameter("medium_motor_speed", m_medium_motor_speed, "0.6");
+  // </rtc-template>
+  
+  return RTC::RTC_OK;
+}
+
+
+RTC::ReturnCode_t ControlEducatorVehicle::onFinalize()
+{
+  return RTC::RTC_OK;
+}
+
+
+RTC::ReturnCode_t ControlEducatorVehicle::onStartup(RTC::UniqueId ec_id)
+{
+  return RTC::RTC_OK;
+}
+
+
+RTC::ReturnCode_t ControlEducatorVehicle::onShutdown(RTC::UniqueId ec_id)
+{
+  return RTC::RTC_OK;
+}
+
+
+RTC::ReturnCode_t ControlEducatorVehicle::onActivated(RTC::UniqueId ec_id)
+{
+  return RTC::RTC_OK;
+}
+
+
+RTC::ReturnCode_t ControlEducatorVehicle::onDeactivated(RTC::UniqueId ec_id)
+{
+  return RTC::RTC_OK;
+}
+
+
+RTC::ReturnCode_t ControlEducatorVehicle::onExecute(RTC::UniqueId ec_id)
+{
+  return RTC::RTC_OK;
+}
+
+
+RTC::ReturnCode_t ControlEducatorVehicle::onAborting(RTC::UniqueId ec_id)
+{
+  return RTC::RTC_OK;
+}
+
+
+RTC::ReturnCode_t ControlEducatorVehicle::onError(RTC::UniqueId ec_id)
+{
+  return RTC::RTC_OK;
+}
+
+
+RTC::ReturnCode_t ControlEducatorVehicle::onReset(RTC::UniqueId ec_id)
+{
+  return RTC::RTC_OK;
+}
+
+
+RTC::ReturnCode_t ControlEducatorVehicle::onStateUpdate(RTC::UniqueId ec_id)
+{
+  return RTC::RTC_OK;
+}
+
+
+RTC::ReturnCode_t ControlEducatorVehicle::onRateChanged(RTC::UniqueId ec_id)
+{
+  return RTC::RTC_OK;
+}
+
+
+
+extern "C"
+{
+ 
+  void ControlEducatorVehicleInit(RTC::Manager* manager)
+  {
+    coil::Properties profile(controleducatorvehicle_spec);
+    manager->registerFactory(profile,
+                             RTC::Create<ControlEducatorVehicle>,
+                             RTC::Delete<ControlEducatorVehicle>);
+  }
+  
+};
+
+

@@ -1,0 +1,152 @@
+ControlEducatorVehicleName - English
+========================
+
+.. toctree::
+   :hidden:
+
+   index_j
+
+
+Introduction
+============
+
+
+For a full list of classes and functions, see the `API documentation`_.
+
+.. _`API Documentation`:
+   doxygen/html/index.html
+
+Requirements
+============
+
+ControlEducatorVehicle uses the `CMake build system`. You will need at least version
+2.8 to be able to build the component.
+
+.. _`CMAke build system`:
+   http://www.cmake.org
+
+
+Installation
+============
+
+Binary
+------
+
+Users of Windows can install the component using the binary installer. This
+will install the component and all its necessary dependencies. It is the
+recommended method of installation in Windows.
+
+- Download the installer from the website.
+- Double-click the executable file to begin installation.
+- Follow the instructions to install the component.
+- You may need to restart your computer for environment variable changes
+  to take effect before using the component.
+
+The component can be launched by double-clicking the
+``ControlEducatorVehicleComp`` executable. The ``ControlEducatorVehicle`` library
+is available for loading into a manager, using the initialisation function
+``ControlEducatorVehicleInit``.
+
+From source
+-----------
+
+Follow these steps to install ControlEducatorVehicle from source in any operating
+system:
+
+- Download the source, either from the repository or a source archive,
+  and extract it somewhere::
+
+    tar -xvzf ControlEducatorVehicle-1.0.0.tar.gz
+
+- Change to the directory containing the extracted source::
+
+    cd ControlEducatorVehicle-1.0.0
+
+- Create a directory called ``build``::
+
+    mkdir build
+
+- Change to that directory::
+
+    cd build
+
+- Run cmake or cmake-gui::
+
+    cmake ../
+
+- If no errors occurred, run make::
+
+    make
+
+- Finally, install the component. Ensure the necessary permissions to
+  install into the chosen prefix are available::
+
+    make install
+
+- The install destination can be changed by executing ccmake and changing
+  the variable ``CMAKE_INSTALL_PREFIX``::
+
+    ccmake ../
+
+The component is now ready for use. See the next section for instructions on
+configuring the component.
+
+ControlEducatorVehicle can be launched in stand-alone mode by executing the
+``ControlEducatorVehicleComp`` executable (installed into ``${prefix}/components/bin``).
+Alternatively, ``libControlEducatorVehicle.so`` can be loaded into a manager, using the
+initialisation function ``ControlEducatorVehicleInit``. This shared object can be found in
+``${prefix}/components/lib`` or ``${prefix}/components/lib64``.
+
+
+Configuration
+=============
+
+The available configuration parameters are described below:
+
+================ ================== ================ ======
+Parameter        Data type          Default Value    Effect
+================ ================== ================ ======
+sensor_height    double             0.20             走行できる地面があると判定する超音波センサの計測値
+back_speed       double             0.1              後退運動をする速さ
+back_time        double             0.5              後退運動する時間
+rotate_speed     double             1.6              回転運動する速さ
+rotate_time      double             1.0              回転運動する時間
+medium_motor_range double             1.0              Mモーターの動作範囲
+medium_motor_speed double             0.6              Mモーターの速度
+================ ================== ================ ======
+
+Ports
+=====
+
+The ports provided by the component are described below:
+
+=============== =========== ============================== =======
+Name            Type        Data type                      Purpose
+=============== =========== ============================== =======
+target_velocity_in InPort      RTC::TimedVelocity2D           目標速度
+ultrasonic      InPort      RTC::RangeData                 超音波センサをレンジセンサと仮定し、要素1の距離データを格納
+touch           InPort      RTC::TimedBooleanSeq           タッチセンサの値をBoolean[2] で出力<br/>0番目が右で1番目が左
+current_pose    InPort      RTC::TimedPose2D               現在の位置・姿勢（角度） (x, y, θ) 
+target_velocity_out OutPort     RTC::TimedVelocity2D           補正後の目標速度
+angle           OutPort     RTC::TimedDouble               モーターMの角度
+=============== =========== ============================== =======
+
+Examples
+========
+
+An example configuration file is provided in the
+``${prefix}/components/share/ControlEducatorVehicle/examples/conf/`` directory.
+
+Changelog
+=========
+
+
+
+License
+=======
+
+This software is developed at the National Institute of Advanced
+Industrial Science and Technology. Approval number H23PRO-????. This
+software is licensed under the Lesser General Public License. See
+COPYING.LESSER.
+

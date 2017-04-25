@@ -1,0 +1,192 @@
+// -*- C++ -*-
+/*!
+ * @file  NineAxisSensor_RT_USB.cpp
+ * @brief RT-USB-9AXIS-00 Component
+ * @date $Date$
+ *
+ * @author 宮本信彦
+ * n-miyamoto@aist.go.jp
+ * 産業技術総合研究所　
+ * ロボットイノベーション研究センター　
+ * ロボットソフトウェアプラットフォーム研究チーム
+ *
+ * LGPL
+ *
+ * $Id$
+ */
+
+#include "NineAxisSensor_RT_USB.h"
+
+// Module specification
+// <rtc-template block="module_spec">
+static const char* nineaxissensor_rt_usb_spec[] =
+  {
+    "implementation_id", "NineAxisSensor_RT_USB",
+    "type_name",         "NineAxisSensor_RT_USB",
+    "description",       "RT-USB-9AXIS-00 Component",
+    "version",           "1.0.0",
+    "vendor",            "AIST",
+    "category",          "Sensor",
+    "activity_type",     "PERIODIC",
+    "kind",              "DataFlowComponent",
+    "max_instance",      "1",
+    "language",          "C++",
+    "lang_type",         "compile",
+    // Configuration variables
+    "conf.default.rotOffset", "0",
+    "conf.default.magnOffsetX", "84",
+    "conf.default.magnOffsetY", "13",
+    "conf.default.magnOffsetZ", "36",
+    "conf.default.serial_port", "/dev/ttyACM0",
+    // Widget
+    "conf.__widget__.rotOffset", "text",
+    "conf.__widget__.magnOffsetX", "text",
+    "conf.__widget__.magnOffsetY", "text",
+    "conf.__widget__.magnOffsetZ", "text",
+    "conf.__widget__.serial_port", "text",
+    // Constraints
+    ""
+  };
+// </rtc-template>
+
+/*!
+ * @brief constructor
+ * @param manager Maneger Object
+ */
+NineAxisSensor_RT_USB::NineAxisSensor_RT_USB(RTC::Manager* manager)
+    // <rtc-template block="initializer">
+  : RTC::DataFlowComponentBase(manager),
+    m_accOut("acc", m_acc),
+    m_magnOut("magn", m_magn),
+    m_gyroOut("gyro", m_gyro),
+    m_tempOut("temp", m_temp),
+    m_rotOut("rot", m_rot)
+
+    // </rtc-template>
+{
+}
+
+/*!
+ * @brief destructor
+ */
+NineAxisSensor_RT_USB::~NineAxisSensor_RT_USB()
+{
+}
+
+
+
+RTC::ReturnCode_t NineAxisSensor_RT_USB::onInitialize()
+{
+  // Registration: InPort/OutPort/Service
+  // <rtc-template block="registration">
+  // Set InPort buffers
+  
+  // Set OutPort buffer
+  addOutPort("acc", m_accOut);
+  addOutPort("magn", m_magnOut);
+  addOutPort("gyro", m_gyroOut);
+  addOutPort("temp", m_tempOut);
+  addOutPort("rot", m_rotOut);
+  
+  // Set service provider to Ports
+  
+  // Set service consumers to Ports
+  
+  // Set CORBA Service Ports
+  
+  // </rtc-template>
+
+  // <rtc-template block="bind_config">
+  // Bind variables and configuration variable
+  bindParameter("rotOffset", m_rotOffset, "0");
+  bindParameter("magnOffsetX", m_magnOffsetX, "84");
+  bindParameter("magnOffsetY", m_magnOffsetY, "13");
+  bindParameter("magnOffsetZ", m_magnOffsetZ, "36");
+  bindParameter("serial_port", m_serial_port, "/dev/ttyACM0");
+  // </rtc-template>
+  
+  return RTC::RTC_OK;
+}
+
+
+RTC::ReturnCode_t NineAxisSensor_RT_USB::onFinalize()
+{
+  return RTC::RTC_OK;
+}
+
+
+RTC::ReturnCode_t NineAxisSensor_RT_USB::onStartup(RTC::UniqueId ec_id)
+{
+  return RTC::RTC_OK;
+}
+
+
+RTC::ReturnCode_t NineAxisSensor_RT_USB::onShutdown(RTC::UniqueId ec_id)
+{
+  return RTC::RTC_OK;
+}
+
+
+RTC::ReturnCode_t NineAxisSensor_RT_USB::onActivated(RTC::UniqueId ec_id)
+{
+  return RTC::RTC_OK;
+}
+
+
+RTC::ReturnCode_t NineAxisSensor_RT_USB::onDeactivated(RTC::UniqueId ec_id)
+{
+  return RTC::RTC_OK;
+}
+
+
+RTC::ReturnCode_t NineAxisSensor_RT_USB::onExecute(RTC::UniqueId ec_id)
+{
+  return RTC::RTC_OK;
+}
+
+
+RTC::ReturnCode_t NineAxisSensor_RT_USB::onAborting(RTC::UniqueId ec_id)
+{
+  return RTC::RTC_OK;
+}
+
+
+RTC::ReturnCode_t NineAxisSensor_RT_USB::onError(RTC::UniqueId ec_id)
+{
+  return RTC::RTC_OK;
+}
+
+
+RTC::ReturnCode_t NineAxisSensor_RT_USB::onReset(RTC::UniqueId ec_id)
+{
+  return RTC::RTC_OK;
+}
+
+
+RTC::ReturnCode_t NineAxisSensor_RT_USB::onStateUpdate(RTC::UniqueId ec_id)
+{
+  return RTC::RTC_OK;
+}
+
+
+RTC::ReturnCode_t NineAxisSensor_RT_USB::onRateChanged(RTC::UniqueId ec_id)
+{
+  return RTC::RTC_OK;
+}
+
+
+
+extern "C"
+{
+ 
+  void NineAxisSensor_RT_USBInit(RTC::Manager* manager)
+  {
+    coil::Properties profile(nineaxissensor_rt_usb_spec);
+    manager->registerFactory(profile,
+                             RTC::Create<NineAxisSensor_RT_USB>,
+                             RTC::Delete<NineAxisSensor_RT_USB>);
+  }
+  
+};
+
+

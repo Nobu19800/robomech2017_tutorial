@@ -1,0 +1,167 @@
+﻿// -*- C++ -*-
+/*!
+ * @file  EV3Simulator.cpp
+ * @brief LRGO MINDSTORMS EV3 Simulator
+ * @date $Date$
+ *
+ * @author Nobuhiko Miyamoto <n-miyamoto@aist.go.jp>
+ *
+ * LGPL
+ *
+ * $Id$
+ */
+
+#include "EV3Simulator.h"
+
+// Module specification
+// <rtc-template block="module_spec">
+static const char* ev3simulator_spec[] =
+  {
+    "implementation_id", "EV3Simulator",
+    "type_name",         "EV3Simulator",
+    "description",       "LRGO MINDSTORMS EV3 Simulator",
+    "version",           "1.0.0",
+    "vendor",            "Miyamoto Nobuhiko",
+    "category",          "Simulator",
+    "activity_type",     "PERIODIC",
+    "kind",              "DataFlowComponent",
+    "max_instance",      "1",
+    "language",          "C++",
+    "lang_type",         "compile",
+    ""
+  };
+// </rtc-template>
+
+/*!
+ * @brief constructor
+ * @param manager Maneger Object
+ */
+EV3Simulator::EV3Simulator(RTC::Manager* manager)
+    // <rtc-template block="initializer">
+  : RTC::DataFlowComponentBase(manager)
+
+    // </rtc-template>
+{
+}
+
+/*!
+ * @brief destructor
+ */
+EV3Simulator::~EV3Simulator()
+{
+}
+
+
+
+RTC::ReturnCode_t EV3Simulator::onInitialize()
+{
+  // Registration: InPort/OutPort/Service
+  // <rtc-template block="registration">
+  // Set InPort buffers
+  
+  // Set OutPort buffer
+  
+  // Set service provider to Ports
+  
+  // Set service consumers to Ports
+  
+  // Set CORBA Service Ports
+  
+  // </rtc-template>
+
+  // <rtc-template block="bind_config">
+  // </rtc-template>
+  
+  return RTC::RTC_OK;
+}
+
+/*
+RTC::ReturnCode_t EV3Simulator::onFinalize()
+{
+  return RTC::RTC_OK;
+}
+*/
+
+/*
+RTC::ReturnCode_t EV3Simulator::onStartup(RTC::UniqueId ec_id)
+{
+  return RTC::RTC_OK;
+}
+*/
+
+/*
+RTC::ReturnCode_t EV3Simulator::onShutdown(RTC::UniqueId ec_id)
+{
+  return RTC::RTC_OK;
+}
+*/
+
+
+RTC::ReturnCode_t EV3Simulator::onActivated(RTC::UniqueId ec_id)
+{
+  return RTC::RTC_OK;
+}
+
+
+RTC::ReturnCode_t EV3Simulator::onDeactivated(RTC::UniqueId ec_id)
+{
+  return RTC::RTC_OK;
+}
+
+
+RTC::ReturnCode_t EV3Simulator::onExecute(RTC::UniqueId ec_id)
+{
+  return RTC::RTC_OK;
+}
+
+/*
+RTC::ReturnCode_t EV3Simulator::onAborting(RTC::UniqueId ec_id)
+{
+  return RTC::RTC_OK;
+}
+*/
+
+/*
+RTC::ReturnCode_t EV3Simulator::onError(RTC::UniqueId ec_id)
+{
+  return RTC::RTC_OK;
+}
+*/
+
+/*
+RTC::ReturnCode_t EV3Simulator::onReset(RTC::UniqueId ec_id)
+{
+  return RTC::RTC_OK;
+}
+*/
+
+/*
+RTC::ReturnCode_t EV3Simulator::onStateUpdate(RTC::UniqueId ec_id)
+{
+  return RTC::RTC_OK;
+}
+*/
+
+/*
+RTC::ReturnCode_t EV3Simulator::onRateChanged(RTC::UniqueId ec_id)
+{
+  return RTC::RTC_OK;
+}
+*/
+
+
+
+extern "C"
+{
+ 
+  void EV3SimulatorInit(RTC::Manager* manager)
+  {
+    coil::Properties profile(ev3simulator_spec);
+    manager->registerFactory(profile,
+                             RTC::Create<EV3Simulator>,
+                             RTC::Delete<EV3Simulator>);
+  }
+  
+};
+
+
