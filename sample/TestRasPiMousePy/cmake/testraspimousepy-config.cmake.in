@@ -1,0 +1,54 @@
+# TestRasPiMousePy CMake config file
+#
+# This file sets the following variables:
+# TestRasPiMousePy_FOUND - Always TRUE.
+# TestRasPiMousePy_INCLUDE_DIRS - Directories containing the TestRasPiMousePy include files.
+# TestRasPiMousePy_IDL_DIRS - Directories containing the TestRasPiMousePy IDL files.
+# TestRasPiMousePy_LIBRARIES - Libraries needed to use TestRasPiMousePy.
+# TestRasPiMousePy_DEFINITIONS - Compiler flags for TestRasPiMousePy.
+# TestRasPiMousePy_VERSION - The version of TestRasPiMousePy found.
+# TestRasPiMousePy_VERSION_MAJOR - The major version of TestRasPiMousePy found.
+# TestRasPiMousePy_VERSION_MINOR - The minor version of TestRasPiMousePy found.
+# TestRasPiMousePy_VERSION_REVISION - The revision version of TestRasPiMousePy found.
+# TestRasPiMousePy_VERSION_CANDIDATE - The candidate version of TestRasPiMousePy found.
+
+message(STATUS "Found TestRasPiMousePy-@PROJECT_VERSION@")
+set(TestRasPiMousePy_FOUND TRUE)
+
+find_package(<dependency> REQUIRED)
+
+#set(TestRasPiMousePy_INCLUDE_DIRS
+#    "@CMAKE_INSTALL_PREFIX@/include/@PROJECT_NAME_LOWER@-@PROJECT_VERSION_MAJOR@"
+#    ${<dependency>_INCLUDE_DIRS}
+#    )
+#
+#set(TestRasPiMousePy_IDL_DIRS
+#    "@CMAKE_INSTALL_PREFIX@/include/@PROJECT_NAME_LOWER@-@PROJECT_VERSION_MAJOR@/idl")
+set(TestRasPiMousePy_INCLUDE_DIRS
+    "@CMAKE_INSTALL_PREFIX@/include/@CPACK_PACKAGE_FILE_NAME@"
+    ${<dependency>_INCLUDE_DIRS}
+    )
+set(TestRasPiMousePy_IDL_DIRS
+    "@CMAKE_INSTALL_PREFIX@/include/@CPACK_PACKAGE_FILE_NAME@/idl")
+
+
+if(WIN32)
+    set(TestRasPiMousePy_LIBRARIES
+        "@CMAKE_INSTALL_PREFIX@/@LIB_INSTALL_DIR@/@CMAKE_SHARED_LIBRARY_PREFIX@@PROJECT_NAME_LOWER@@CMAKE_STATIC_LIBRARY_SUFFIX@"
+        ${<dependency>_LIBRARIES}
+        )
+else(WIN32)
+    set(TestRasPiMousePy_LIBRARIES
+        "@CMAKE_INSTALL_PREFIX@/@LIB_INSTALL_DIR@/@CMAKE_SHARED_LIBRARY_PREFIX@@PROJECT_NAME_LOWER@@CMAKE_SHARED_LIBRARY_SUFFIX@"
+        ${<dependency>_LIBRARIES}
+        )
+endif(WIN32)
+
+set(TestRasPiMousePy_DEFINITIONS ${<dependency>_DEFINITIONS})
+
+set(TestRasPiMousePy_VERSION @PROJECT_VERSION@)
+set(TestRasPiMousePy_VERSION_MAJOR @PROJECT_VERSION_MAJOR@)
+set(TestRasPiMousePy_VERSION_MINOR @PROJECT_VERSION_MINOR@)
+set(TestRasPiMousePy_VERSION_REVISION @PROJECT_VERSION_REVISION@)
+set(TestRasPiMousePy_VERSION_CANDIDATE @PROJECT_VERSION_CANDIDATE@)
+
